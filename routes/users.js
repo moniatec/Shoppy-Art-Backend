@@ -6,7 +6,7 @@ const { getUserToken, requireAuth } = require("../auth");
 const router = express.Router();
 const db = require("../db/models");
 
-const { User, Tweet } = db;
+const { User, Order } = db;
 
 const validateEmailAndPassword = [
   check("email")
@@ -57,10 +57,21 @@ router.post(
       return next(err);
     }
     const token = getUserToken(user);
-    res.json({ token, user: { id: user.id }});
+    res.json({ token, user: { id: user.id } });
   })
 );
 
+router.get(
+  "/:id/orders",
+  requireAuth,
+  asyncHandler(async (req, res, next) => {
+    const userId = parseInt(req.params.id, 10);
+    const orders = await Orders.findAll({
+      where: { userId },
+    });
+    res.json({ orders });
+  })
+);
 
 router.get(
   "/:id",

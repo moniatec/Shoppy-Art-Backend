@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   User.associate = function (models) {
-   // associations can be defined here
+    User.hasMany(models.Order, {
+      as: "orders",
+      foreignKey: "userId",
+    });
   };
 
   User.prototype.validatePassword = function (password) {
