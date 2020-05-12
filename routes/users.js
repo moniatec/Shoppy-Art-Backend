@@ -83,4 +83,14 @@ router.get(
   })
 );
 
+router.delete(
+  "/token",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    req.player.tokenId = null;
+    await req.player.save();
+    res.json({ message: "success" });
+  })
+);
+
 module.exports = router;
