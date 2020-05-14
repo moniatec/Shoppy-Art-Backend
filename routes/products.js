@@ -13,9 +13,9 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const products = await Product.findAll({
-      include: [{ model: Order, as: "order", attributes: [ "id"] }],
+      include: [{ model: Order, as: "order", attributes: ["id"] }],
       order: [["createdAt", "DESC"]],
-      attributes: ["productName", "id"],
+      attributes: ["productName", "id", "description", "photoUrl", "price"],
     });
     res.json({ products });
   })
@@ -57,21 +57,20 @@ router.get(
 );
 
 router.get(
-    "/search/:name",
-    asyncHandler(async (req, res, next) => {
-      const product = await Product.findOne({
-        where: {
-          productName: req.params.name,
-        },
-      });
-      if (product) {
-        res.json({ product });
-      } else {
-        next(productNotFoundError(req.params.name));
-      }
-    })
-  );
-
+  "/search/:name",
+  asyncHandler(async (req, res, next) => {
+    const product = await Product.findOne({
+      where: {
+        productName: req.params.name,
+      },
+    });
+    if (product) {
+      res.json({ product });
+    } else {
+      next(productNotFoundError(req.params.name));
+    }
+  })
+);
 
 router.put(
   "/:id",
@@ -97,6 +96,5 @@ router.put(
     }
   })
 );
-
 
 module.exports = router;
