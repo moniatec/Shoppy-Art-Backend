@@ -6,7 +6,7 @@ const router = express.Router();
 const db = require("../db/models");
 
 const { Order, User } = db;
-
+console.log(Order);
 router.use(requireAuth);
 
 const orderNotFoundError = (id) => {
@@ -16,7 +16,7 @@ const orderNotFoundError = (id) => {
   err.status = 404;
   return err;
 };
-
+//get all orders
 router.get(
   "/:id",
   asyncHandler(async (req, res, next) => {
@@ -42,7 +42,7 @@ router.post(
     res.json({ order });
   })
 );
-
+//update an order
 router.put(
   "/:id",
   asyncHandler(async (req, res, next) => {
@@ -66,7 +66,7 @@ router.put(
     }
   })
 );
-
+//delete an order
 router.delete(
   "/:id",
   asyncHandler(async (req, res, next) => {
