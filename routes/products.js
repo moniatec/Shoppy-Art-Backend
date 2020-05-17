@@ -7,7 +7,7 @@ const db = require("../db/models");
 
 const { Product, Order } = db;
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 router.get(
   "/",
